@@ -1,0 +1,13 @@
+# Python cache and bytecode
+__pycache__/
+*.pyc
+
+# Google credentials (keep private!)
+token.pickle
+credentials.json
+
+# Environment or config
+.env
+
+# Other optional: IDE files
+.vscode/

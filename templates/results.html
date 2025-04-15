@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plagiarism Check Results</title>
+    <!-- Correct CSS link -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/styles.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <header>
+      <div class="logo"></div>
+      <h1>Plagiarism Check Results</h1>
+    </header>
+
+    <main>
+      <h2>Plagiarism Results for: {{ filename }}</h2>
+      {% if results %}
+      <ul class="plagiarism-results">
+        {% for res in results %}
+        <li>{{ res }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="no-plagiarism">No plagiarism detected. 🎉</p>
+      {% endif %}
+      <div class="back-link">
+        <a href="/">Check another file</a>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; Dubeyji's Plagiarism Checker</p>
+    </footer>
+  </body>
+</html>

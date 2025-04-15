@@ -1,0 +1,292 @@
+:root {
+  --fire-engine-red: #cd2628;
+  --black: #000000;
+  --davys-gray: #5b5b5b;
+  --jet: #2b2a29;
+  --white: #ffffff;
+
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #cd2628;
+
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transition: all 0.3s ease;
+}
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--white);
+  color: var(--jet);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--fire-engine-red), var(--black));
+  color: var(--white);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--box-shadow);
+}
+
+h1,
+h2 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: var(--white);
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: var(--fire-engine-red);
+}
+
+/* Main Section */
+main {
+  max-width: 800px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  flex: 1;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  background-color: var(--jet);
+  color: var(--white);
+  margin-top: auto;
+}
+
+/* Logo */
+.logo {
+  width: 50px;
+  height: 50px;
+  background-color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23CD2628" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+
+/* File Upload Form */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+input[type="file"] {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border: 2px dotted var(--fire-engine-red);
+  border-radius: var(--border-radius);
+  background-color: #fffafa; /* Light subtle red */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 1rem;
+  color: transparent;
+}
+
+input[type="file"]::before {
+  content: "📁 Drag & drop your Python file or click to browse";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--davys-gray);
+  font-weight: 500;
+  font-style: italic;
+  pointer-events: none;
+  border: 2px dotted var(--fire-engine-red);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+input[type="file"]:hover {
+  border-color: var(--fire-engine-red);
+  background-color: #ffeaea; /* Slightly deeper soft red */
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background-color: var(--fire-engine-red);
+  color: var(--white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  align-self: flex-start;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--black);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(205, 38, 40, 0.3);
+}
+
+/* File Upload Name */
+.file-display {
+  margin-top: -1rem;
+  font-size: 0.95rem;
+  color: var(--davys-gray);
+  font-style: italic;
+  padding-left: 0.5rem;
+  transition: var(--transition);
+}
+
+.file-display.show {
+  color: var(--fire-engine-red);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* Results Section */
+.plagiarism-results {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+
+.plagiarism-results li {
+  padding: 1rem;
+  background-color: #ffe5e5;
+  border-left: 4px solid var(--danger-color);
+  margin-bottom: 0.75rem;
+  border-radius: 4px;
+  color: var(--jet);
+}
+
+.no-plagiarism {
+  padding: 1.5rem;
+  background-color: #d1fae5;
+  border-left: 4px solid var(--success-color);
+  border-radius: 4px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 2rem 0;
+  animation: pulse 2s infinite;
+}
+
+.no-plagiarism::before {
+  content: "✓";
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+/* Back Link */
+.back-link {
+  margin-top: 2rem;
+}
+
+.back-link a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--fire-engine-red);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.back-link a::before {
+  content: "←";
+  margin-right: 0.5rem;
+}
+
+.back-link a:hover {
+  color: var(--black);
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  main {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: auto;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.plagiarism-result.green {
+  background-color: #d1fae5;
+  border-left: 4px solid var(--success-color);
+  color: var(--jet);
+}
+
+.plagiarism-result.red {
+  background-color: #ffe5e5;
+  border-left: 4px solid var(--danger-color);
+  color: var(--jet);
+}

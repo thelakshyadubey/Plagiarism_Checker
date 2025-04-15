@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Upload Python File</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/styles.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      /* Hide real file input */
+      input[type="file"] {
+        display: none;
+      }
+
+      /* Styled label as file upload button */
+      .custom-file-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 120px;
+        border: 2px dashed var(--primary-color);
+        border-radius: var(--border-radius);
+        background-color: var(--secondary-color);
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--primary-color);
+        transition: var(--transition);
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .custom-file-label:hover {
+        background-color: #e0f2fe;
+        border-color: var(--primary-dark);
+      }
+
+      /* File name display */
+      .filename-display {
+        padding: 1.5rem;
+        border: 2px dashed var(--primary-dark);
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        color: var(--primary-dark);
+        background-color: #f0f9ff;
+        display: none;
+        margin-top: 1rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo"></div>
+      <h1>NMIMS Plagiarism Checker</h1>
+    </header>
+    <main>
+      <h2>Upload your Python file for Plagiarism Check</h2>
+      <form
+        action="/"
+        method="post"
+        enctype="multipart/form-data"
+        class="upload-form"
+      >
+        <label for="fileInput" class="custom-file-label" id="fileLabel">
+          📂 Drag and drop your file here or click to browse
+        </label>
+        <input
+          type="file"
+          name="codefile"
+          id="fileInput"
+          accept=".py, .cpp, .txt"
+          required
+          onchange="handleFileSelect(this)"
+        />
+        <div id="filenameDisplay" class="filename-display"></div>
+        <button type="submit">Upload and Check</button>
+      </form>
+    </main>
+    <footer>
+      <p>&copy; Dubeyji's Plagiarism Checker</p>
+    </footer>
+
+    <script>
+      function handleFileSelect(input) {
+        const label = document.getElementById("fileLabel");
+        const filenameDiv = document.getElementById("filenameDisplay");
+
+        if (input.files && input.files[0]) {
+          const filename = "📄 " + input.files[0].name;
+          label.style.display = "none";
+          filenameDiv.innerText = filename;
+          filenameDiv.style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>

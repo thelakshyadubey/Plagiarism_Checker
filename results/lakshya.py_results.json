@@ -1,0 +1,10 @@
+[
+    {
+        "compared_with": "friend1.py",
+        "similarity_score": "38.21%"
+    },
+    {
+        "compared_with": "friend2.py",
+        "similarity_score": "100.0%"
+    }
+]
