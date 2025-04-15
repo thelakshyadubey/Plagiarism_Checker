@@ -152,7 +152,5 @@ This project is developed as part of academic coursework at NMIMS and is open-so
 🙋‍♂️ Author
 Lakshya Dubey
 B.Tech Computer Engineering
-Turing Club Core Member
-[NMIMS | Mumbai]
-Email: lakshya.dubey@example.com (optional)
+Email: lakshya.dubey@example.com
 
