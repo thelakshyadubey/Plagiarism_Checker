@@ -1,90 +1,159 @@
-# 🔍 Distributed Code Plagiarism Checker (Web App)
+# Distributed Code Plagiarism Checker
 
-This project is a **distributed code plagiarism checker** built with Python, Flask, Google Drive API, and AST (Abstract Syntax Tree) comparison logic. It allows students to upload their `.py` files and checks for similarity with peer submissions stored on Google Drive.
-
-> 💡 Originally developed for the **Distributed Computing Course** at NMIMS as a practical demonstration of file distribution, cloud sync, and plagiarism detection using compiler-level code comparison techniques.
+This project is a distributed code plagiarism detection system implemented as a Flask web application. It allows users to upload Python files, which are then compared against peer submissions stored in a shared Google Drive folder using abstract syntax tree (AST)-based comparison.
 
 ---
 
-## 📂 Project Structure
+## Key Features
 
-```bash
+* Web-based file upload interface (drag and drop supported)
+* Google Drive synchronization for peer file access
+* AST-based structural comparison to identify code similarity
+* Clear, percentage-based plagiarism report
+* Frontend designed using HTML, CSS, and Jinja2 templating
+* Modular architecture for easy maintenance and enhancement
+
+---
+
+## Directory Structure
+
+```
 plag_checker_web/
-├── app.py                 # Flask web app (main entry point)
-├── drive_utils.py         # Handles Google Drive authentication and syncing
-├── ast_compare.py         # Compares files using AST-based similarity
+├── app.py                 # Flask application (main entry point)
+├── drive_utils.py         # Google Drive authentication and sync logic
+├── ast_compare.py         # AST-based code comparison logic
 ├── templates/
-│   ├── upload.html        # File upload UI
-│   └── results.html       # Plagiarism result UI
+│   ├── upload.html        # File upload user interface
+│   └── results.html       # Plagiarism results display
 ├── static/
 │   └── styles/
-│       └── styles.css     # Custom CSS styling
-├── .gitignore             # Ensures sensitive files are not pushed
-├── README.md              # Project documentation
-🚀 Features
-📤 Upload Python file from web UI
+│       └── styles.css     # Custom frontend styling
+├── uploads/               # Temporary folder for uploaded files
+├── downloads/             # Folder for downloaded peer files
+├── credentials.json       # Google OAuth2 credentials (not version controlled)
+├── token.pickle           # Saved user authentication token (not version controlled)
+├── requirements.txt       # List of Python dependencies
+└── README.md              # Project documentation
+```
 
-☁️ Sync peer files from Google Drive
+---
 
-🧠 Detect plagiarism using AST-based logic (structure-aware)
+## How It Works
 
-✅ Report similarity % with visual results (red = plagiarized, green = safe)
+1. The user uploads a `.py` file using the web interface.
+2. The file is stored locally in the `uploads/` directory.
+3. The application uploads the file to a shared Google Drive folder.
+4. All peer `.py` files from the same folder are downloaded to `downloads/`.
+5. Each peer file is compared to the uploaded file using AST-based structural comparison.
+6. The similarity scores are displayed in a report format on the web interface.
 
-🎨 Responsive frontend with drag & drop support
+---
 
-🔐 Token and credentials securely excluded
+## AST-Based Comparison Overview
 
-📌 Technologies Used
-Flask (Python Web Framework)
+The comparison uses Python’s built-in `ast` module to parse and compare the syntax trees of each program. This method focuses on code structure rather than formatting, comments, or variable names, enabling more accurate detection of logical similarity.
 
-Google Drive API (google-api-python-client, oauth2client)
+```python
+import ast
+import difflib
 
-AST Module (ast + difflib) for code comparison
-
-HTML + CSS (Drag & drop upload interface)
-
-Jinja2 (Flask templating)
-
-Git for version control
-
-VS Code + GitHub for collaboration
-
-🛠️ How It Works
-User uploads a .py file from the frontend.
-
-Flask handles the request and:
-
-Saves the file locally
-
-Uploads it to Google Drive
-
-Syncs peer files from a shared Google Drive folder
-
-Each file is parsed into an Abstract Syntax Tree using ast module
-
-Structural similarity is calculated between each peer file and the uploaded one
-
-Similarity scores are shown on the results page
-
-🧠 AST-Based Comparison Logic
-We use Python's built-in ast module to parse code into its syntax tree, ignoring variable names, formatting, and comments.
-
-This gives structure-aware comparison rather than raw text matching
-
-Uses difflib.SequenceMatcher on ast.dump() representations
-
-python
-Copy
-Edit
 tree1 = ast.parse(code1)
 tree2 = ast.parse(code2)
 similarity = difflib.SequenceMatcher(None, ast.dump(tree1), ast.dump(tree2)).ratio()
-🔒 Sensitive File Handling (.gitignore)
-To prevent leakage of credentials or tokens, the following files are ignored from version control:
+```
 
-bash
-Copy
-Edit
+---
+
+## Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/thelakshyadubey/Plagiarism_Checker.git
+cd Plagiarism_Checker
+```
+
+### 2. Create and Activate a Virtual Environment (Optional but Recommended)
+
+```bash
+python -m venv venv
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
+```
+
+### 3. Install Python Dependencies
+
+Install all required packages using the `requirements.txt` file:
+
+```bash
+pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+If any issues arise during installation (especially with NumPy), make sure your pip and build tools are up to date.
+
+---
+
+### 4. Configure Google Drive API
+
+1. Create OAuth credentials via [Google Cloud Console](https://console.cloud.google.com/).
+2. Download the `credentials.json` file and place it in the root of the project.
+3. When prompted on first run, sign in with your Google account. A `token.pickle` file will be generated to store your session.
+4. These files must **not be shared or committed to version control**.
+
+---
+
+### 5. Run the Application
+
+Start the Flask development server:
+
+```bash
+python app.py
+```
+
+Then open your browser and navigate to:
+
+```
+http://localhost:6000
+```
+
+You can now upload `.py` files and view similarity results.
+
+---
+
+## Deployment
+
+To deploy this application on platforms such as Render, Railway, or Replit:
+
+* Ensure `credentials.json` and `token.pickle` are securely stored using the platform’s secret management tools.
+* Set the startup command as:
+
+```bash
+python app.py
+```
+
+* Ensure appropriate environment variables or file mounts are configured for Google Drive authentication.
+
+---
+
+## Example Output
+
+The plagiarism result is displayed as a list of peer files along with their corresponding similarity scores. Example:
+
+```
+friend1.py → 42.17% similar
+friend2.py → 100.00% similar
+```
+
+---
+
+## Security and Version Control
+
+The following files and folders should be excluded from your Git repository:
+
+```
 # .gitignore
 token.pickle
 credentials.json
@@ -92,65 +161,17 @@ __pycache__/
 *.pyc
 .env
 .vscode/
-✅ Setup Instructions (Local)
-1. Clone the Repository
-bash
-Copy
-Edit
-git clone https://github.com/your-username/plagiarism-checker-web.git
-cd plagiarism-checker-web
-2. Create & Activate a Virtual Environment (optional but recommended)
-bash
-Copy
-Edit
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-3. Install Dependencies
-bash
-Copy
-Edit
-pip install -r requirements.txt
-If requirements.txt isn't created, you can install manually:
+```
 
-bash
-Copy
-Edit
-pip install flask google-api-python-client oauth2client
-4. Add Your Google Drive Credentials
-Place your credentials.json and token.pickle in the project root.
+---
 
-These files are required to sync with Google Drive.
-
-Do not upload them to GitHub.
-
-5. Run the Web App
-bash
-Copy
-Edit
-python app.py
-Visit http://localhost:5000 in your browser.
-
-🌐 Deploying the App
-To deploy on platforms like Render, Replit, or Railway:
-
-Upload your source code (excluding sensitive files)
-
-Use environment variables or secret file uploads for credentials
-
-Set the start command to python app.py
-
-📸 Screenshots
-![image](https://github.com/user-attachments/assets/c651b23f-fa4a-4416-8f1d-033899b29bdc)
-![image](https://github.com/user-attachments/assets/3463be02-64fb-495c-931e-9d6685831352)
-![image](https://github.com/user-attachments/assets/363d4dff-264e-42c0-9123-e7ccea796ce6)
-
-Results Page
-
-🧾 License
-This project is developed as part of academic coursework at NMIMS and is open-source for learning and educational purposes.
-
-🙋‍♂️ Author
+## Author
 Lakshya Dubey
-B.Tech Computer Engineering
-Email: lakshya.dubey@example.com
 
+---
+
+## Preview
+![image](https://github.com/user-attachments/assets/180d5f46-2fcb-4aca-a307-c1e1baf82efd)
+![image](https://github.com/user-attachments/assets/a865fd49-0d5c-4e2e-8142-7e60ddc5b0a4)
+![image](https://github.com/user-attachments/assets/c18218aa-ebbc-4fd0-b051-37f628b0e364)
+![image](https://github.com/user-attachments/assets/8c906d94-d587-4fdd-af2e-b7810fc95277)
